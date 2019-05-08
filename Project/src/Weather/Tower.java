@@ -2,18 +2,26 @@ package Weather;
 
 import Aircrafts.Flyable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tower {
-    private Flyable observers;
+
+    private List<Flyable> observers = new ArrayList<Flyable>();
 
     public void register(Flyable flyable){
-        // TODO -- register
+        if(!observers.contains(flyable)){
+            observers.add(flyable);
+        }
     }
 
     public void unregister(Flyable flyable){
-        // TODO -- unregister
+        if(observers.contains(flyable)){
+            observers.remove(flyable);
+        }
     }
 
     protected void conditionsChanged(){
-        // TODO -- conditionsChanged
+        observers.forEach(flyable -> flyable.updateConditions());
     }
 }

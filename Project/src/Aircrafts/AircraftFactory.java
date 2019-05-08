@@ -7,7 +7,7 @@ public class AircraftFactory {
     enum AircraftTypes {
         helicopter,
         jetplane,
-        baloon
+        balloon
     }
 
     public Flyable newAircraft(String type, String name, int longitude, int latitude, int height){
@@ -20,9 +20,11 @@ public class AircraftFactory {
             case jetplane:
                 return (new JetPlane(name, coords));
 
-            case baloon:
-                return(new Baloon(name, coords));
+            case balloon:
+                return(new Balloon(name, coords));
+
+            default:
+                return(null);
           }
-       return null;
-    }
+     }
 }
