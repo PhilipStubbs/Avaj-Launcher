@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
     public static List<String> readFileInList(String fileName)
@@ -26,16 +29,34 @@ public class Main {
         return lines;
     }
 
-    public static void main(String[] args) {
-        String currentPath =  Paths.get("").toAbsolutePath().toString();;
-        String path = currentPath + "/scenario.txt";
-        List l = readFileInList(path);
-        Iterator<String> itr = l.iterator();
-        while (itr.hasNext())
-            System.out.println(itr.next());
+      public static void main(String[] args) {
+            BufferedReader br = null;
+            if (args.length == 1) {
+                try {
+                    br = new BufferedReader(new FileReader(args[0]));
+                    String line;
 
-        System.out.println(path);
-        System.out.println(l.toString());
+                    while ((line = br.readLine()) != null) {
+                        System.out.println(line);
+                        // TODO -- point this to the avaj_launcher parser.
+                    }
+
+                } catch (IOException e) {
+                    System.out.println("Invalid File");
+                } finally {
+                    try {
+                        if (br != null) {
+                            br.close();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error closing");
+                    }
+                }
+            } else {
+                System.out.println("No file");
+            }
+
+
         Flyable t = new AircraftFactory().newAircraft("balloon","test",1,1,1);
 
         t.getAirNames();
