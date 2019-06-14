@@ -11,23 +11,27 @@ public class AircraftFactory {
         balloon
     }
 
-    public Flyable newAircraft(String type, String name, int longitude, int latitude, int height) {
+    public Flyable newAircraft(String type, String name, int longitude, int latitude, int height)throws InvalidAircraftTypeException {
         Coordinates coords = new Coordinates(longitude, latitude, height);
 
-        switch (AircraftTypes.valueOf(type.toLowerCase())) {
-            case helicopter:
-                return(new Helicopter(name, coords));
+        try {
+            switch (AircraftTypes.valueOf(type.toLowerCase())) {
+                case helicopter:
+                    return (new Helicopter(name, coords));
 
-            case jetplane:
-                return (new JetPlane(name, coords));
+                case jetplane:
+                    return (new JetPlane(name, coords));
 
-            case balloon:
-                return(new Balloon(name, coords));
+                case balloon:
+                    return (new Balloon(name, coords));
 
-            default:
-                return(null);
-//                throw new InvalidAircraftTypeException(type + "is not vaild");
-          }
+                default:
+                    return (null);
+//
+            }
+        } catch (IllegalArgumentException e){
+            throw new InvalidAircraftTypeException("type:\""+type+"\"" + " is not valid Aircraft");
+        }
 
      }
 }
