@@ -1,6 +1,7 @@
 package Aircrafts;
 
 import Weather.Coordinates;
+import CustomException.InvalidAircraftTypeException;
 
 public class AircraftFactory {
 
@@ -10,7 +11,7 @@ public class AircraftFactory {
         balloon
     }
 
-    public Flyable newAircraft(String type, String name, int longitude, int latitude, int height){
+    public Flyable newAircraft(String type, String name, int longitude, int latitude, int height) {
         Coordinates coords = new Coordinates(longitude, latitude, height);
 
         switch (AircraftTypes.valueOf(type.toLowerCase())) {
@@ -25,6 +26,8 @@ public class AircraftFactory {
 
             default:
                 return(null);
+//                throw new InvalidAircraftTypeException(type + "is not vaild");
           }
+
      }
 }
