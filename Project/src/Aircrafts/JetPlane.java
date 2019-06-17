@@ -1,4 +1,5 @@
 package Aircrafts;
+import Output.SimulationOutput;
 import Weather.Coordinates;
 import Weather.Tower;
 import Weather.WeatherTower;
@@ -11,18 +12,17 @@ public class JetPlane extends Aircraft implements Flyable {
     }
 
     public void updateConditions(){
-        weatherTower.changeWeather();
         int lon = cooridinates.getLongitude();
         int lat = cooridinates.getLatitude();
         int height = cooridinates.getHeight();
         String weather = this.weatherTower.getWeather(this.cooridinates);
+        String outputLine;
 
         if (weather.equalsIgnoreCase("SUN")){
             int sunLatMod = 10;
             int sunHeightMod = 2;
-            // TODO -- Write something nice for the output.
+            outputLine = getFullDetails() +": "+" It sure is hot.";
             if (height + sunHeightMod > 100){
-                // TODO -- max alt
                 this.cooridinates = new Coordinates(lon, lat + sunLatMod, 100);
             }
             else {
@@ -32,39 +32,41 @@ public class JetPlane extends Aircraft implements Flyable {
 
         else if (weather.equalsIgnoreCase("RAIN")){
             int rainLatMod = 5;
-            // TODO -- Write something nice for the output.
+            outputLine = getFullDetails() +": "+" I should correct for the rain";
             this.cooridinates = new Coordinates(lon, lat + rainLatMod, height);
         }
 
         else if (weather.equalsIgnoreCase("FOG")){
             int fogLatMod = 1;
-            // TODO -- Write something nice for the output.
+            outputLine = getFullDetails() +": "+" I cant see the ground, its too foggy.";
             this.cooridinates = new Coordinates(lon, lat + fogLatMod, height);
         }
 
         else if (weather.equalsIgnoreCase("SNOW")){
             int snowHeightMod = 7;
-            // TODO -- Write something nice for the output.
             if (height - snowHeightMod <= 0)
             {
-                // TODO -- Write unregistering messages
+                outputLine = getFullDetails() +": "+" Landing due to snow.";
                 this.weatherTower.unregister(this);
+            } else {
+                outputLine = getFullDetails() +": "+" so much snow!";
             }
             this.cooridinates = new Coordinates(lon, lat, height - snowHeightMod);
         }
+        else {
+            outputLine = getFullDetails() + " something has gone wrong!";
+        }
+        SimulationOutput.addToOutputline(outputLine);
     }
 
     public void registerTower(WeatherTower weatherTower){
+        weatherTower.register(this);
        this.weatherTower = weatherTower;
     }
 
-    public String getAircraftName() {
-        return(JetPlane.this.getName());
-    }
+    public String getAircraftName() {return(JetPlane.this.getName()); }
     public String getAircraftType() { return ("JetPlane"); }
-    public String getAircraftId() {
-        return(JetPlane.this.getId());
-    }
+    public String getAircraftId() {return(JetPlane.this.getId()); }
     public String getFullDetails(){ return(getAircraftType()+"#" + getAircraftName() +"("+getAircraftId()+")"); }
 
 }

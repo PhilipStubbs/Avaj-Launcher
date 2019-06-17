@@ -1,22 +1,16 @@
 package Aircrafts;
 import Output.SimulationOutput;
 import Weather.Coordinates;
-import Weather.Tower;
 import Weather.WeatherTower;
 
 public class Balloon extends Aircraft implements Flyable {
     private WeatherTower weatherTower;
-    private Tower tower;
 
     Balloon(String name, Coordinates coordinates){
         super(name, coordinates);
     }
 
     public void updateConditions(){
-        weatherTower.changeWeather();
-        String name = getAircraftName();
-        String id = getAircraftId();
-        String type = getAircraftType();
         int lon = cooridinates.getLongitude();
         int lat = cooridinates.getLatitude();
         int height = cooridinates.getHeight();
@@ -28,7 +22,6 @@ public class Balloon extends Aircraft implements Flyable {
             int sunHeightMod = 4;
             outputLine = getFullDetails() +": "+" Its nice an sunny up here.";
             if (height + sunHeightMod > 100){
-                // TODO -- max alt
                 this.cooridinates = new Coordinates(lon, lat + sunLongMod, 100);
             }
             else {
@@ -42,10 +35,9 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - rainHeightMod <= 0)
             {
                 outputLine = getFullDetails() +": "+" I'm Landing due to the rain.";
-                // TODO -- Write unregistering messages
                 this.weatherTower.unregister(this);
             } else {
-                outputLine = getFullDetails() + ": " + " Its quit rainy up here.";
+                outputLine = getFullDetails() + ": " + " Its quite rainy up here.";
             }
 
             this.cooridinates = new Coordinates(lon, lat, height - rainHeightMod);
@@ -57,8 +49,6 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - fogHeightMod <= 0)
             {
                 outputLine = getFullDetails() + ": " + " I'm landing due to the fog";
-
-                // TODO -- Write unregistering messages
                 this.weatherTower.unregister(this);
             }else {
                 outputLine = getFullDetails() + ": " + " I cant see anything due to the fog, hope I dont crash..";
@@ -71,7 +61,6 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - snowHeightMod <= 0)
             {
                 outputLine = getFullDetails() + ": " + " I'm landing due to the snow";
-                // TODO -- Write unregistering messages
                 this.weatherTower.unregister(this);
             } else {
                 outputLine = getFullDetails() + ": " + " The snow is nice.";
@@ -86,12 +75,9 @@ public class Balloon extends Aircraft implements Flyable {
     }
 
     public void registerTower(WeatherTower weatherTower){
+        weatherTower.register(this);
         this.weatherTower = weatherTower;
     }
-
-//    public void getAirNames() {
-//        System.out.println(Balloon.this.getName());
-//    }
 
     public String getAircraftName() {
         return(Balloon.this.getName());

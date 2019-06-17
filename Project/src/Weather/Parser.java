@@ -1,3 +1,5 @@
+package Weather;
+
 import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
 import CustomException.AircraftExistsException;
@@ -22,21 +24,23 @@ public class Parser {
 		}
 	}
 
-	private static void createAircrafts(String[] split, Tower tower) throws InvalidAircraftTypeException {
+	private static void createAircraft(String[] split,  WeatherTower weatherTower) throws InvalidAircraftTypeException {
 		String type = split[0];
 		String name = split[1];
 		int longitude = Integer.parseInt(split[2]);
 		int latitude = Integer.parseInt(split[3]);
 		int height = Integer.parseInt(split[4]);
 		Flyable spaceShip = new AircraftFactory().newAircraft(type, name, longitude, latitude, height);
+		spaceShip.registerTower(weatherTower);
+
 		shipNames.add(name);
 		// TODO -- add weather tower to spaceships
 
-		tower.register(spaceShip);
+//		tower.register(spaceShip);
 //		spaceShip.getAirNames();
 	}
 
-	static void avajLauncherParser(String fileLine, Tower tower) throws InvaildFileLineException ,InvalidAircraftTypeException, AircraftExistsException {
+	static void avajLauncherParser(String fileLine, WeatherTower weatherTower) throws InvaildFileLineException ,InvalidAircraftTypeException, AircraftExistsException {
 		String[] split = fileLine.trim().split("\\s+");
 		if (split.length != 5)  {
 			throw new InvaildFileLineException(fileLine);
@@ -54,7 +58,7 @@ public class Parser {
 			throw new InvaildFileLineException(fileLine + "\"->\""+ split[4]);
 		}
 
-		createAircrafts(split, tower);
+		createAircraft(split ,weatherTower);
 	}
 
 	private static boolean isNumeric(String strNum) {

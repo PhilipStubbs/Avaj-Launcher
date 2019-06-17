@@ -2,15 +2,13 @@ package Weather;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class WeatherProvider {
-	private WeatherProvider weatherProvider;
-	private String[] weather = {"RAIN", "FOG", "SUN", "SNOW"};
+	private static WeatherProvider weatherProvider = new WeatherProvider();
+	private static String[] weather = {"RAIN", "FOG", "SUN", "SNOW"};
 
-	private WeatherProvider(){
-		// TODO -- Weather.WeatherProvider
-	}
+	private WeatherProvider(){}
 
-	public WeatherProvider getProvider(){
-	   return(this.weatherProvider);
+	public static WeatherProvider getProvider(){
+	   return(weatherProvider);
 	}
 
 	public String getCurrentWeather(Coordinates coordinates){

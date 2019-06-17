@@ -1,10 +1,10 @@
-import Aircrafts.AircraftFactory;
-import Aircrafts.Flyable;
+package Weather;
+
 import CustomException.AircraftExistsException;
 import CustomException.InvaildFileLineException;
 import CustomException.InvalidAircraftTypeException;
 import Output.SimulationOutput;
-import Weather.Tower;
+
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,10 +16,11 @@ public class Main {
 			BufferedReader br = null;
 			int gameTime = 0;
 			int round = -1;
-			Tower tower = new Tower();
 
 			if (args.length == 1) {
 				try {
+					WeatherTower weatherTower = new WeatherTower();
+
 					br = new BufferedReader(new FileReader(args[0]));
 					String line;
 
@@ -30,12 +31,13 @@ public class Main {
 
 					/*  Grabs the rest of the lines to check/create ships */
 					while ((line = br.readLine()) != null) {
-						Parser.avajLauncherParser(line, tower);
+						Parser.avajLauncherParser(line, weatherTower);
 					}
 
 					/*  simulation */
 					while (++round <= gameTime){
 						// TODO -- simulation
+						weatherTower.changeWeather();
 					}
 
 				} catch (IOException | InvaildFileLineException e) {
