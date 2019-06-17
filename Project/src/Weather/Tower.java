@@ -14,7 +14,7 @@ public class Tower {
 		if(!observers.contains(flyable)){
 		flyable.registerTower(weatherTower);
 			observers.add(flyable);
-			String outputLine = "Tower says: "+flyable.getAircraftType()+"#" + flyable.getAircraftName() +"("+flyable.getAircraftId()+")" + " registered to weather tower.";
+			String outputLine = "Tower says: "+flyable.getFullDetails() + ":"+ " registered to weather tower.";
 			SimulationOutput.addToOutputline(outputLine);
 		} else {
 			System.out.println("already exists");

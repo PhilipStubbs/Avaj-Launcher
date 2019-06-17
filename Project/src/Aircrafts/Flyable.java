@@ -8,4 +8,5 @@ public interface Flyable {
     String getAircraftName();
     String getAircraftType();
     String getAircraftId();
+    String getFullDetails();
 }

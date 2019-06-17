@@ -61,10 +61,10 @@ public class JetPlane extends Aircraft implements Flyable {
     public String getAircraftName() {
         return(JetPlane.this.getName());
     }
-
     public String getAircraftType() { return ("JetPlane"); }
     public String getAircraftId() {
         return(JetPlane.this.getId());
     }
+    public String getFullDetails(){ return(getAircraftType()+"#" + getAircraftName() +"("+getAircraftId()+")"); }
 
 }

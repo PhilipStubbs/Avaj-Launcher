@@ -66,4 +66,5 @@ public class Helicopter extends Aircraft implements Flyable {
     public String getAircraftId() {
         return(Helicopter.this.getId());
     }
+    public String getFullDetails(){ return(getAircraftType()+"#" + getAircraftName() +"("+getAircraftId()+")"); }
 }
