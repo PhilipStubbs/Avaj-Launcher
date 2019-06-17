@@ -69,8 +69,21 @@ public class Balloon extends Aircraft implements Flyable {
         this.weatherTower = weatherTower;
     }
 
-    public void getAirNames() {
-        System.out.println(Balloon.this.getName());
+//    public void getAirNames() {
+//        System.out.println(Balloon.this.getName());
+//    }
+
+    public String getAircraftName() {
+        return(Balloon.this.getName());
     }
+
+    public String getAircraftType() {
+        return ("Balloon");
+    }
+
+    public String getAircraftId() {
+        return(Balloon.this.getId());
+    }
+
 
 }

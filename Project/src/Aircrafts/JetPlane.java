@@ -58,7 +58,13 @@ public class JetPlane extends Aircraft implements Flyable {
        this.weatherTower = weatherTower;
     }
 
-    public void getAirNames() {
-        System.out.println(JetPlane.this.getName());
+    public String getAircraftName() {
+        return(JetPlane.this.getName());
     }
+
+    public String getAircraftType() { return ("JetPlane"); }
+    public String getAircraftId() {
+        return(JetPlane.this.getId());
+    }
+
 }

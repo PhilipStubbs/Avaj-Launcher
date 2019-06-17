@@ -1,45 +1,69 @@
 import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
+import CustomException.AircraftExistsException;
 import CustomException.InvaildFileLineException;
 import Weather.Tower;
 import Aircrafts.AircraftFactory;
 import CustomException.InvalidAircraftTypeException;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.util.regex.Pattern;
 
 public class Parser {
+	private static List<String> shipNames = new ArrayList<String>();
 
-    private static void createAircrafts(String[] split, Tower tower) throws InvalidAircraftTypeException {
-        String type = split[0];
-        String name = split[1];
-        int longitude = Integer.parseInt(split[2]);
-        int latitude = Integer.parseInt(split[3]);
-        int height = Integer.parseInt(split[4]);
-        Flyable spaceShip = new AircraftFactory().newAircraft(type, name, longitude, latitude, height);
-        // TODO -- add weather tower to spaceships
+	static int checkFirstLine(String fileLine) throws InvaildFileLineException {
+		String[] split = fileLine.trim().split("\\s+");
+		if (split.length == 1 && isNumeric(split[0])){
+			return (Integer.parseInt(split[0]));
+		} else {
+			throw new InvaildFileLineException(fileLine);
+		}
+	}
 
-        tower.register(spaceShip);
-        spaceShip.getAirNames();
-    }
+	private static void createAircrafts(String[] split, Tower tower) throws InvalidAircraftTypeException {
+		String type = split[0];
+		String name = split[1];
+		int longitude = Integer.parseInt(split[2]);
+		int latitude = Integer.parseInt(split[3]);
+		int height = Integer.parseInt(split[4]);
+		Flyable spaceShip = new AircraftFactory().newAircraft(type, name, longitude, latitude, height);
+		shipNames.add(name);
+		// TODO -- add weather tower to spaceships
 
-    static void avajLauncherParser(String fileLine, Tower tower) throws InvaildFileLineException ,InvalidAircraftTypeException {
-        String[] split = fileLine.trim().split("\\s+");
-        if (split.length == 1 && isNumeric(split[0])){
+		tower.register(spaceShip);
+//		spaceShip.getAirNames();
+	}
 
+	static void avajLauncherParser(String fileLine, Tower tower) throws InvaildFileLineException ,InvalidAircraftTypeException, AircraftExistsException {
+		String[] split = fileLine.trim().split("\\s+");
+		if (split.length != 5)  {
+			throw new InvaildFileLineException(fileLine);
+		}
+//		else if (shipNames.contains(split[1])) {
+//			throw new AircraftExistsException(fileLine + " -> With name:\""+ split[1]);
+//		}
+		else  if (!isNumeric(split[2])) {
+			throw new InvaildFileLineException(fileLine + "\"->\""+ split[2]);
+		}
+		else  if (!isNumeric(split[3])) {
+			throw new InvaildFileLineException(fileLine + "\"->\""+ split[3]);
+		}
+		else  if (!isNumeric(split[4])) {
+			throw new InvaildFileLineException(fileLine + "\"->\""+ split[4]);
+		}
 
-            // TODO -- do something about the first one
-            return;
-        } else  if (split.length != 5 || !isNumeric(split[2]) || !isNumeric(split[3]) || !isNumeric(split[4]))  {
-            throw new InvaildFileLineException(fileLine);
-        }
+		createAircrafts(split, tower);
+	}
 
-        createAircrafts(split, tower);
-    }
-
-    private static boolean isNumeric(String strNum) {
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException | NullPointerException nfe) {
-            return false;
-        }
-        return true;
-    }
+	private static boolean isNumeric(String strNum) {
+		try {
+			int	i = Integer.parseInt(strNum);
+//			double d = Double.parseDouble(strNum);
+		} catch (NumberFormatException | NullPointerException nfe) {
+			return false;
+		}
+		return true;
+	}
 }
