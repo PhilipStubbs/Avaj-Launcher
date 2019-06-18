@@ -17,8 +17,10 @@ public class JetPlane extends Aircraft implements Flyable {
         String outputLine;
 
         if (height <= 0){
-            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" +lat + " height:" + height;
+            outputLine = getFullDetails() +": "+"I dont feel like flying today. " + "lon:" + lon + " lat:" +lat + " height:" + height;
+            SimulationOutput.addToOutputLine(outputLine);
             this.weatherTower.unregister(this);
+            return;
         }
 
         else if (weather.equalsIgnoreCase("SUN")){
@@ -51,7 +53,9 @@ public class JetPlane extends Aircraft implements Flyable {
             if (height - snowHeightMod <= 0)
             {
                 outputLine = getFullDetails() +": "+" Landing due to snow. " + "lon:" + lon + " lat:" +lat + " height:" + (height - snowHeightMod);
+                SimulationOutput.addToOutputLine(outputLine);
                 this.weatherTower.unregister(this);
+                return;
             } else {
                 outputLine = getFullDetails() +": "+" so much snow!";
             }

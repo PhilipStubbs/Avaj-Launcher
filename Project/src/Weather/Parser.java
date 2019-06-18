@@ -30,7 +30,7 @@ public class Parser {
 	static void avajLauncherParser(String fileLine, WeatherTower weatherTower) throws InvaildFileLineException ,InvalidAircraftTypeException, AircraftExistsException {
 		String[] split = fileLine.trim().split("\\s+");
 		if (split.length != 5)  {
-			throw new InvaildFileLineException(fileLine);
+			throw new InvaildFileLineException(fileLine + "\"->\""+ "invalid amount of arguments:"+split.length);
 		}
 		else  if (!isNumeric(split[2])) {
 			throw new InvaildFileLineException(fileLine + "\"->\""+ split[2]);

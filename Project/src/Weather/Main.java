@@ -38,6 +38,8 @@ public class Main {
 					while (++round <= gameTime){
 						weatherTower.changeWeather();
 					}
+					SimulationOutput.writeToSimulation();
+					System.out.println("Finished running simulation " + gameTime+" times.");
 
 				} catch (IOException | InvaildFileLineException e) {
 					e.printStackTrace();
@@ -55,8 +57,7 @@ public class Main {
 			} else {
 				System.out.println("No file");
 			}
-		  SimulationOutput.writeToSimulation();
-		  System.out.println("Finished running simulation " + gameTime+" times.");
+
 	}
 }
 

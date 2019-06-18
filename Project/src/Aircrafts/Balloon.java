@@ -17,8 +17,10 @@ public class Balloon extends Aircraft implements Flyable {
         String outputLine;
 
         if (height <= 0){
-            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            outputLine = getFullDetails() +": "+"I forgot my Balloon license, guess we not flying today. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            SimulationOutput.addToOutputLine(outputLine);
             this.weatherTower.unregister(this);
+            return;
         }
        else  if (weather.equalsIgnoreCase("SUN")){
             int sunLongMod = 2;
@@ -39,7 +41,9 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - rainHeightMod <= 0)
             {
                 outputLine = getFullDetails() +": "+" I'm Landing due to the rain. " + "lon:" + lon + " lat:" + lat + " height:" + (height- rainHeightMod);
+                SimulationOutput.addToOutputLine(outputLine);
                 this.weatherTower.unregister(this);
+                return;
             } else {
                 outputLine = getFullDetails() + ": " + " Its quite rainy up here.";
             }
@@ -53,7 +57,9 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - fogHeightMod <= 0)
             {
                 outputLine = getFullDetails() + ": " + " I'm landing due to the fog. " + "lon:" + lon + " lat:" + lat + " height:" + (height - fogHeightMod);
+                SimulationOutput.addToOutputLine(outputLine);
                 this.weatherTower.unregister(this);
+                return;
             }else {
                 outputLine = getFullDetails() + ": " + " I cant see anything due to the fog, hope I dont crash..";
             }
@@ -65,7 +71,9 @@ public class Balloon extends Aircraft implements Flyable {
             if (height - snowHeightMod <= 0)
             {
                 outputLine = getFullDetails() + ": " + " I'm landing due to the snow. " + "lon:" + lon + " lat:" + lat + " height:" + (height - snowHeightMod);
+                SimulationOutput.addToOutputLine(outputLine);
                 this.weatherTower.unregister(this);
+                return;
             } else {
                 outputLine = getFullDetails() + ": " + " The snow is nice.";
             }

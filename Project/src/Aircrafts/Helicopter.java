@@ -17,8 +17,10 @@ public class Helicopter extends Aircraft implements Flyable {
         String outputLine;
 
         if (height <= 0){
-            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            outputLine = getFullDetails() +": "+"we having engine problems, cannot take off. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            SimulationOutput.addToOutputLine(outputLine);
             this.weatherTower.unregister(this);
+            return;
         }
         else if (weather.equalsIgnoreCase("SUN")){
             int sunLongMod = 10;
@@ -50,7 +52,9 @@ public class Helicopter extends Aircraft implements Flyable {
             if (height - snowHeightMod <= 0)
             {
                 outputLine = getFullDetails() +": "+" Too much snow. We must land. " + "lon:" + lon + " lat:" +lat + " height:" + (height - snowHeightMod);
+                SimulationOutput.addToOutputLine(outputLine);
                 this.weatherTower.unregister(this);
+                return;
             } else {
                 outputLine = getFullDetails() +": "+" I feel like we shouldn't fly in the snow?";
             }
