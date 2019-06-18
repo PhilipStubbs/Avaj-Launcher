@@ -1,7 +1,5 @@
 package Aircrafts;
 import Output.SimulationOutput;
-import Weather.Coordinates;
-import Weather.Tower;
 import Weather.WeatherTower;
 
 public class JetPlane extends Aircraft implements Flyable {

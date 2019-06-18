@@ -1,5 +1,5 @@
 package Weather;
-import java.util.concurrent.ThreadLocalRandom;
+import Aircrafts.Coordinates;
 
 public class WeatherProvider {
 	private static WeatherProvider weatherProvider = new WeatherProvider();

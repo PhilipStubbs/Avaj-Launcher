@@ -1,6 +1,5 @@
 package Aircrafts;
 
-import Weather.Coordinates;
 import CustomException.InvalidAircraftTypeException;
 
 public class AircraftFactory {

@@ -1,6 +1,5 @@
 package Aircrafts;
 import Output.SimulationOutput;
-import Weather.Coordinates;
 import Weather.WeatherTower;
 
 public class Balloon extends Aircraft implements Flyable {
