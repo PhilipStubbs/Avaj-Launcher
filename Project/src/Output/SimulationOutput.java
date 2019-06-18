@@ -18,13 +18,12 @@ public class SimulationOutput {
 				writer.write(line);
 			}
 		} catch (IOException ex) {
-			// Report
 		} finally {
-			try {writer.close();} catch (Exception ex) {/*ignore*/}
+			try {writer.close();} catch (Exception ex) {}
 		}
 	}
 
-	static public void addToOutputline(String line) {
+	static public void addToOutputLine(String line) {
 		output.add(line + "\n");
 	}
 }

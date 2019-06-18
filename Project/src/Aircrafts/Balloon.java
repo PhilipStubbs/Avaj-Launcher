@@ -16,15 +16,20 @@ public class Balloon extends Aircraft implements Flyable {
         String weather = this.weatherTower.getWeather(this.cooridinates);
         String outputLine;
 
-        if (weather.equalsIgnoreCase("SUN")){
+        if (height <= 0){
+            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            this.weatherTower.unregister(this);
+        }
+       else  if (weather.equalsIgnoreCase("SUN")){
             int sunLongMod = 2;
             int sunHeightMod = 4;
             outputLine = getFullDetails() +": "+" Its nice an sunny up here.";
             if (height + sunHeightMod > 100){
-                this.cooridinates = new Coordinates(lon, lat + sunLongMod, 100);
+                this.cooridinates = new Coordinates(lon + sunLongMod, lat , 100);
+                outputLine += " We are at max alt.";
             }
             else {
-                this.cooridinates = new Coordinates(lon, lat + sunLongMod, height + sunHeightMod);
+                this.cooridinates = new Coordinates(lon + sunLongMod, lat , height + sunHeightMod);
             }
         }
 
@@ -33,7 +38,7 @@ public class Balloon extends Aircraft implements Flyable {
 
             if (height - rainHeightMod <= 0)
             {
-                outputLine = getFullDetails() +": "+" I'm Landing due to the rain.";
+                outputLine = getFullDetails() +": "+" I'm Landing due to the rain. " + "lon:" + lon + " lat:" + lat + " height:" + (height- rainHeightMod);
                 this.weatherTower.unregister(this);
             } else {
                 outputLine = getFullDetails() + ": " + " Its quite rainy up here.";
@@ -47,7 +52,7 @@ public class Balloon extends Aircraft implements Flyable {
 
             if (height - fogHeightMod <= 0)
             {
-                outputLine = getFullDetails() + ": " + " I'm landing due to the fog";
+                outputLine = getFullDetails() + ": " + " I'm landing due to the fog. " + "lon:" + lon + " lat:" + lat + " height:" + (height - fogHeightMod);
                 this.weatherTower.unregister(this);
             }else {
                 outputLine = getFullDetails() + ": " + " I cant see anything due to the fog, hope I dont crash..";
@@ -59,7 +64,7 @@ public class Balloon extends Aircraft implements Flyable {
             int snowHeightMod = 15;
             if (height - snowHeightMod <= 0)
             {
-                outputLine = getFullDetails() + ": " + " I'm landing due to the snow";
+                outputLine = getFullDetails() + ": " + " I'm landing due to the snow. " + "lon:" + lon + " lat:" + lat + " height:" + (height - snowHeightMod);
                 this.weatherTower.unregister(this);
             } else {
                 outputLine = getFullDetails() + ": " + " The snow is nice.";
@@ -70,7 +75,7 @@ public class Balloon extends Aircraft implements Flyable {
             outputLine = getFullDetails() + " something has gone wrong!";
         }
 
-        SimulationOutput.addToOutputline(outputLine);
+        SimulationOutput.addToOutputLine(outputLine);
     }
 
     public void registerTower(WeatherTower weatherTower){

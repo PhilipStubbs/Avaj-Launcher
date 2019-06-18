@@ -1,6 +1,8 @@
 package Weather;
 import Aircrafts.Coordinates;
 
+import java.util.Random;
+
 public class WeatherProvider {
 	private static WeatherProvider weatherProvider = new WeatherProvider();
 	private static String[] weather = {"RAIN", "FOG", "SUN", "SNOW"};
@@ -12,7 +14,13 @@ public class WeatherProvider {
 	}
 
 	public String getCurrentWeather(Coordinates coordinates){
-		int randomSeed = (coordinates.getHeight() + coordinates.getLatitude() + coordinates.getLongitude()) % 4;
+		Random rn = new Random();
+		int randomSeed = (coordinates.getHeight() + coordinates.getLatitude() + coordinates.getLongitude() + (rn.nextInt() %4)) % 4;
+		if (randomSeed > 3){
+			randomSeed = 3;
+		} else if (randomSeed < 0){
+			randomSeed = 0;
+		}
 		return (weather[randomSeed]);
 	}
 }

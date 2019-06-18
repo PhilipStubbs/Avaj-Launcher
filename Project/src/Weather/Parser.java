@@ -4,16 +4,9 @@ import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
 import CustomException.AircraftExistsException;
 import CustomException.InvaildFileLineException;
-import Weather.Tower;
-import Aircrafts.AircraftFactory;
 import CustomException.InvalidAircraftTypeException;
-import java.util.ArrayList;
-import java.util.List;
-
-import java.util.regex.Pattern;
 
 public class Parser {
-	private static List<String> shipNames = new ArrayList<String>();
 
 	static int checkFirstLine(String fileLine) throws InvaildFileLineException {
 		String[] split = fileLine.trim().split("\\s+");
@@ -32,12 +25,6 @@ public class Parser {
 		int height = Integer.parseInt(split[4]);
 		Flyable spaceShip = new AircraftFactory().newAircraft(type, name, longitude, latitude, height);
 		spaceShip.registerTower(weatherTower);
-
-		shipNames.add(name);
-		// TODO -- add weather tower to spaceships
-
-//		tower.register(spaceShip);
-//		spaceShip.getAirNames();
 	}
 
 	static void avajLauncherParser(String fileLine, WeatherTower weatherTower) throws InvaildFileLineException ,InvalidAircraftTypeException, AircraftExistsException {
@@ -45,9 +32,6 @@ public class Parser {
 		if (split.length != 5)  {
 			throw new InvaildFileLineException(fileLine);
 		}
-//		else if (shipNames.contains(split[1])) {
-//			throw new AircraftExistsException(fileLine + " -> With name:\""+ split[1]);
-//		}
 		else  if (!isNumeric(split[2])) {
 			throw new InvaildFileLineException(fileLine + "\"->\""+ split[2]);
 		}
@@ -64,7 +48,6 @@ public class Parser {
 	private static boolean isNumeric(String strNum) {
 		try {
 			int	i = Integer.parseInt(strNum);
-//			double d = Double.parseDouble(strNum);
 		} catch (NumberFormatException | NullPointerException nfe) {
 			return false;
 		}

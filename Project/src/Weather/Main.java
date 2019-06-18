@@ -36,7 +36,6 @@ public class Main {
 
 					/*  simulation */
 					while (++round <= gameTime){
-						// TODO -- simulation
 						weatherTower.changeWeather();
 					}
 

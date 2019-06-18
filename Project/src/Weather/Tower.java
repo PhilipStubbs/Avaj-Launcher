@@ -13,7 +13,7 @@ public abstract class Tower {
 		if(!observers.contains(flyable)){
 			observers.add(flyable);
 			String outputLine = "Tower says: "+flyable.getFullDetails() + ":"+ " registered to weather tower.";
-			SimulationOutput.addToOutputline(outputLine);
+			SimulationOutput.addToOutputLine(outputLine);
 		} else {
 			System.out.println("already exists");
 		}
@@ -23,7 +23,7 @@ public abstract class Tower {
 		if(observers.contains(flyable)){
 			observers.remove(flyable);
 			String outputLine = "Tower says: "+flyable.getFullDetails() + ":"+ " is now unregistered from weather tower.";
-			SimulationOutput.addToOutputline(outputLine);
+			SimulationOutput.addToOutputLine(outputLine);
 		}
 	}
 

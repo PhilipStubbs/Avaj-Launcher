@@ -26,7 +26,6 @@ public class AircraftFactory {
 
                 default:
                     return (null);
-//
             }
         } catch (IllegalArgumentException e){
             throw new InvalidAircraftTypeException("type:\""+type+"\"" + " is not valid Aircraft");

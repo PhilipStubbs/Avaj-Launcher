@@ -16,36 +16,40 @@ public class Helicopter extends Aircraft implements Flyable {
         String weather = this.weatherTower.getWeather(this.cooridinates);
         String outputLine;
 
-
-        if (weather.equalsIgnoreCase("SUN")){
+        if (height <= 0){
+            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" + lat + " height:" + height;
+            this.weatherTower.unregister(this);
+        }
+        else if (weather.equalsIgnoreCase("SUN")){
             int sunLongMod = 10;
             int sunHeightMod = 2;
             outputLine = getFullDetails() +": "+" The sun is so bright";
             if (height + sunHeightMod > 100){
-                this.cooridinates = new Coordinates(lon, lat + sunLongMod, 100);
+                this.cooridinates = new Coordinates(lon + sunLongMod, lat , 100);
+                outputLine += " We are at max alt.";
             }
             else {
-                this.cooridinates = new Coordinates(lon, lat + sunLongMod, height + sunHeightMod);
+                this.cooridinates = new Coordinates(lon + sunLongMod, lat , height + sunHeightMod);
             }
         }
 
         else if (weather.equalsIgnoreCase("RAIN")){
             int rainLongMod = 5;
             outputLine = getFullDetails() +": "+" Lets try avoid the rain next time.";
-            this.cooridinates = new Coordinates(lon, lat + rainLongMod, height);
+            this.cooridinates = new Coordinates(lon + rainLongMod, lat , height);
         }
 
         else if (weather.equalsIgnoreCase("FOG")){
             int fogLongMod = 1;
             outputLine = getFullDetails() +": "+" This is what I would imagine hell would be like.";
-            this.cooridinates = new Coordinates(lon, lat + fogLongMod, height);
+            this.cooridinates = new Coordinates(lon + fogLongMod, lat , height);
         }
 
         else if (weather.equalsIgnoreCase("SNOW")){
             int snowHeightMod = 12;
             if (height - snowHeightMod <= 0)
             {
-                outputLine = getFullDetails() +": "+" Too much snow. we must land.";
+                outputLine = getFullDetails() +": "+" Too much snow. We must land. " + "lon:" + lon + " lat:" +lat + " height:" + (height - snowHeightMod);
                 this.weatherTower.unregister(this);
             } else {
                 outputLine = getFullDetails() +": "+" I feel like we shouldn't fly in the snow?";
@@ -55,7 +59,7 @@ public class Helicopter extends Aircraft implements Flyable {
             outputLine = getFullDetails() + " something has gone wrong!";
         }
 
-        SimulationOutput.addToOutputline(outputLine);
+        SimulationOutput.addToOutputLine(outputLine);
 
     }
 

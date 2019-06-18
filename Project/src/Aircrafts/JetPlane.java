@@ -16,12 +16,18 @@ public class JetPlane extends Aircraft implements Flyable {
         String weather = this.weatherTower.getWeather(this.cooridinates);
         String outputLine;
 
-        if (weather.equalsIgnoreCase("SUN")){
+        if (height <= 0){
+            outputLine = getFullDetails() +": "+"we cannot take off. " + "lon:" + lon + " lat:" +lat + " height:" + height;
+            this.weatherTower.unregister(this);
+        }
+
+        else if (weather.equalsIgnoreCase("SUN")){
             int sunLatMod = 10;
             int sunHeightMod = 2;
             outputLine = getFullDetails() +": "+" It sure is hot.";
             if (height + sunHeightMod > 100){
                 this.cooridinates = new Coordinates(lon, lat + sunLatMod, 100);
+                outputLine += " We are at max alt.";
             }
             else {
                 this.cooridinates = new Coordinates(lon, lat + sunLatMod, height + sunHeightMod);
@@ -44,7 +50,7 @@ public class JetPlane extends Aircraft implements Flyable {
             int snowHeightMod = 7;
             if (height - snowHeightMod <= 0)
             {
-                outputLine = getFullDetails() +": "+" Landing due to snow.";
+                outputLine = getFullDetails() +": "+" Landing due to snow. " + "lon:" + lon + " lat:" +lat + " height:" + (height - snowHeightMod);
                 this.weatherTower.unregister(this);
             } else {
                 outputLine = getFullDetails() +": "+" so much snow!";
@@ -54,7 +60,7 @@ public class JetPlane extends Aircraft implements Flyable {
         else {
             outputLine = getFullDetails() + " something has gone wrong!";
         }
-        SimulationOutput.addToOutputline(outputLine);
+        SimulationOutput.addToOutputLine(outputLine);
     }
 
     public void registerTower(WeatherTower weatherTower){
