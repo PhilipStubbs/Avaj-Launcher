@@ -26,7 +26,7 @@ public abstract class Tower {
 			SimulationOutput.addToOutputline(outputLine);
 		}
 	}
-.
+
 	protected void conditionsChanged(){
 		{
 			for(int i = 0; i < observers.size(); i++)
